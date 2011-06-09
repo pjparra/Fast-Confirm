@@ -36,13 +36,13 @@ You'll see in the included CSS file that there are two sections, the first one s
 ##Options
 There are a few options to make Fast Confirm more flexible. Here they are, with their default values:
 
-* __position__: ['top', 'right', 'bottom', 'left']
+* __position__: ['top', 'right', _'bottom'_, 'left']
     * Defines where to put the confirmation box, realtively to the trigger element.
 * __offset__: {top: 0, left: 0}
     * Allows precise positioning. Top and left offsets will be added to the computed default absolute position of the confirmation box. If you set the top offset to -5 for example, the confirmation box will be 5 pixels above its default position.
 * __zIndex__: 10000
     * Allows you to fine tune the z-index if you're facing z-index issues causing the confirm box not to appear
-* __eventToBind__: [eventName, false]
+* __eventToBind__: [eventName, _false_]
     * An event name (submit, click...) or false. If an event name is provided, Fast Confirm will take care of event management. This is really useful when you want to deal with form submission.
 * __questionText__: "Are you sure?"
     * The question asked by the confirm box.
@@ -52,7 +52,7 @@ There are a few options to make Fast Confirm more flexible. Here they are, with 
     * The text of the button designated to cancelthe action
 * __targetElement__: null
     * A selector to specify on which element, inside the binded element, the confirm box should be opened. Mostly useful to open the box on the submit button of a form.
-* __unique__: [true, false]
+* __unique__: [true, _false_]
     * If set to true, only one confirm box can remain opened. Any new confirm box will close opened boxes, triggering the "cancel" action on each one.
 
 * __fastConfirmClass__: 'fast_confirm'
