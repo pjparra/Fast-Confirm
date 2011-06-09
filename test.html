@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" type="text/css" href="jquery.fastconfirm.css"/>
+	<title>Fast Confirm demo</title>
+</head>
+
+<body>
+	<style>
+		* {
+			font: 14px Arial;
+		}
+		h1 {
+			font-size: 20px;
+			font-weight: bold;
+		}
+		h2 {
+			font-size: 16px;
+			font-weight: bold;
+		}
+		p {
+			width: 500px;
+		}
+		form {
+			width: 400px;
+		}
+	</style>
+
+	<h1>Fast Confirm demonstration</h1>
+	
+	<h2>A simple example</h2>
+	<p>
+		Fast Confirm is another very lightweight, easy to use and efficient jQuery plugin. 
+		It is designed to ask the user for confirmations in an easy and smooth way. 
+		You can easily make the bubble appear on top, right, bottom or left side.
+	</p>
+	<p>
+		Also, it supports CSS3 to allow modern browser users to have a better experience
+		while keeping HTML as lightweight as possible.
+		But, wait! Old browser users will still have a degraded but nice experience too.
+	</p>
+	<p>
+		Just try to click the button ! <button id="try">Try it!</button>
+	</p>
+	
+	<h2>What about forms ?</h2>
+	<p>
+		Since version 2.0, you can also let Fast Confirm take care of the event handling. 
+		It's really useful with forms, and it is totally unobtrusive. With version 1.x, 
+		you had to use a button instead of a submit, and manually submit the form in your code
+		in the onProceed method.
+	</p>
+	<p>
+		This is not the case with version 2.x. Just take a regular form, and apply Fast Confirm to it,
+		with the right parameters.
+	</p>
+	<p>
+		Here is a little example, with a simple plain old form.
+	</p>
+	<form id="confirmed_form" action="ok.html" method="post">
+		Some input: <input type="text" />
+		<input type="submit" value="Send" />
+	</form>
+	
+	<h2>One more thing...</h2>
+	<p>
+		Version 2.0 means redesigning. And not only about the little things you saw above.
+		Fast Confirm now supports a better, more consistent way of calling internal methods.
+		If you're familiar with jQueryUI (and a lot of other plugins), you will probably feel comfortable
+		with this new way.
+	</p>
+	<p>
+		For the moment, there's only one method you can call : $(trigger).fastConfirm('close').
+		Obviously enough, it will close the confirm box binded with the trigger element.
+	</p>
+
+	<script src="jquery-1.4.2.min.js" type="text/javascript"></script>
+	<script src="jquery.fastconfirm.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		$(function() {
+			$('#try').click(function() {
+				$(this).fastConfirm({
+					position: "right",
+					questionText: "Are you sure you want <br/>to try Fast Confirm?",
+					onProceed: function(trigger) {
+						alert("If you want a try, you've got it!");
+						$(trigger).fastConfirm('close');
+					},
+					onCancel: function(trigger) {
+						alert("Erm. In fact, you were already trying it, don't you think?");
+						$(trigger).fastConfirm('close');
+					}
+				});
+			});
+			
+			$('#confirmed_form').fastConfirm({
+				eventToBind: 'submit',
+				targetElement: ':submit',
+				onCancel: function(trigger) {
+					alert('OK, no problem. Take your time.');
+					$(trigger).fastConfirm('close');
+				}
+			});
+		});
+	</script>
+	
+</body>
+</html>
