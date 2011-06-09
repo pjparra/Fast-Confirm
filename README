@@ -6,3 +6,29 @@ This plugin doesn't use any image, which makes it extra lightweight. Thanks to A
 
 Since version 2.0, you can let Fast Confirm take care of the events management, which permits to use it really simply with form submissions for instance.
 
+Basic usage:
+JS
+
+The jQuery object to which you apply the plugin will be the trigger of the confirmation box. This trigger will be passed along in the parameters for the callback functions.
+View Raw Code?
+
+    $('#try').fastConfirm(options);
+
+What else?
+You can also call methods, the jQueryUI way:
+View Raw Code?
+
+    $('#try').fastConfirm('close');
+
+HTML
+
+Just any valid HTML element:
+View Raw Code?
+
+    <button id="try">Try it!</button>
+
+CSS
+
+A CSS file is included in the downloadable package. But you might want to add some custom CSS to make the integration more seamless.
+
+You'll see in the included CSS file that there are two sections, the first one shouldn't be edited, it is a part of the plugin behaviour, and the second part contains what is relative to the look & feel, so you can customize it (if you want a red background for your confirmation box for example).
