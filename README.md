@@ -42,8 +42,10 @@ There are a few options to make Fast Confirm more flexible. Here they are, with 
     * Allows precise positioning. Top and left offsets will be added to the computed default absolute position of the confirmation box. If you set the top offset to -5 for example, the confirmation box will be 5 pixels above its default position.
 * __zIndex__: 10000
     * Allows you to fine tune the z-index if you're facing z-index issues causing the confirm box not to appear
-* __eventToBind__: [eventName, _false_]
-    * An event name (submit, click...) or false. If an event name is provided, Fast Confirm will take care of event management. This is really useful when you want to deal with form submission.
+* __eventToBind__: (eventName|_null_)
+    * An event name ('submit', 'click'...) or null. If an event name is provided, Fast Confirm will take care of event management. This is really useful when you want to deal with form submission. The real event (form submission for instance) will only be fired when the deferred returned by the `onProceed` callback will be resolved. By default, `onProceed` returns true, which is equivalent to a resolved deferred.
+* __condition__: (function|_null_)
+    * A function returning a boolean, or null. If a function is provided, the confirm box will only appear if the condition function returns true. Has no effect if `eventToBind` is null.
 * __questionText__: "Are you sure?"
     * The question asked by the confirm box.
 * __proceedText__: "Yes"
@@ -54,11 +56,10 @@ There are a few options to make Fast Confirm more flexible. Here they are, with 
     * A selector to specify on which element, inside the binded element, the confirm box should be opened. Mostly useful to open the box on the submit button of a form.
 * __unique__: [true, _false_]
     * If set to true, only one confirm box can remain opened. Any new confirm box will close opened boxes, triggering the "cancel" action on each one.
-
 * __fastConfirmClass__: 'fast_confirm'
     * The CSS class prefix used in all Fast Confirm elements. If you want to change classes names for any reason, you have to use this parameter
 * __onProceed__: function(trigger, clicked) {$.fastConfirm.close(trigger);}
-    * The function called when the user hits the confirmation button
+    * The function called when the user hits the confirmation button. Can return a deferred object for a better event sequence control if you set the `eventToBind` parameter. You could, for instance, launch an ajax request and want to wait for it to succeed before submitting your form.
 * __onCancel__: function(trigger, clicked) {$.fastConfirm.close(trigger);}
     * The function called when the user hits the cancellation button
 

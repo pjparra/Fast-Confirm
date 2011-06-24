@@ -1,6 +1,6 @@
 /*
  * jQuery Fast Confirm
- * version: 2.1.1 (2011-03-23)
+ * version: 2.2.0 (2011-06-24)
  * @requires jQuery v1.3.2 or later
  *
  * Examples and documentation at: http://blog.pierrejeanparra.com/jquery-plugins/fast-confirm/
@@ -24,7 +24,8 @@
 					position: 'bottom',
 					offset: {top: 0, left: 0},
 					zIndex: 10000,
-					eventToBind: false,
+					eventToBind: null,
+					condition: null,
 					questionText: "Are you sure?",
 					proceedText: "Yes",
 					cancelText: "No",
@@ -55,7 +56,7 @@
 					confirmBoxArrowClass,
 					confirmBoxArrowBorderClass,
 					$target = params.targetElement ? $(params.targetElement, $trigger) : $trigger,
-					offset = $target.offset(),
+					offset,
 					topOffset,
 					leftOffset,
 					
@@ -70,13 +71,14 @@
 							
 							// Register actions
 							$confirmYes.bind('click.fast_confirm', function () {
+								var deferred;
 								// In case the DOM has been refreshed in the meantime or something...
 								$trigger.data('fast_confirm.box', $confirmBox).addClass(params.fastConfirmClass + '_trigger');
-								params.onProceed($trigger);
+								deferred = params.onProceed($trigger);
 								
 								// If the user wants us to handle events
-								if (params.eventToBind) {
-									trigger[params.eventToBind]();
+								if (params.eventToBind !== null) {
+									$.when(deferred).done(function() { trigger[params.eventToBind]() });
 								}
 							});
 							
@@ -99,6 +101,8 @@
 							// Append the confirm box to the body. It will not be visible as it is off-screen by default. Positionning will be done at the last time
 							$confirmBox.append($confirmYes).append($confirmNo);
 							$('body').append($confirmBox);
+							
+							offset = $target.offset();
 							
 							// Calculate absolute positionning depending on the trigger-relative position 
 							switch (params.position) {
@@ -157,11 +161,16 @@
 					};
 				
 				// If the user wants to give us complete control over event handling
-				if (params.eventToBind) {
-					$trigger.bind(params.eventToBind + '.fast_confirm', function () {
-						displayBox();
-						return false;
-					});
+				if (params.eventToBind !== null) {
+					if (params.condition === null || params.condition()) {
+						$trigger.bind(params.eventToBind + '.fast_confirm', function () {
+							displayBox();
+							return false;
+						});
+					}
+					else {
+						return true;
+					}
 				} else {
 					// Let event handling to the user, just display the confirm box
 					displayBox();
