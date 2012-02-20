@@ -152,7 +152,8 @@
 							$confirmBox.css({
 								top: topOffset,
 								left: leftOffset,
-								zIndex: params.zIndex
+								zIndex: params.zIndex,
+								outline: 'none'
 							}).focus();
 							
 							// Link trigger and confirm box
