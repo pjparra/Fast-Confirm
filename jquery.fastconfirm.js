@@ -1,6 +1,6 @@
 /*
  * jQuery Fast Confirm
- * version: 2.2.0 (2011-06-24)
+ * version: 2.2.1 (2012-08-17)
  * @requires jQuery v1.3.2 or later
  *
  * Examples and documentation at: http://blog.pierrejeanparra.com/jquery-plugins/fast-confirm/
@@ -163,15 +163,15 @@
 				
 				// If the user wants to give us complete control over event handling
 				if (params.eventToBind !== null) {
-					if (params.condition === null || params.condition()) {
-						$trigger.bind(params.eventToBind + '.fast_confirm', function () {
+					$trigger.bind(params.eventToBind + '.fast_confirm', function () {
+						if (params.condition === null || params.condition()) {
 							displayBox();
 							return false;
-						});
-					}
-					else {
-						return true;
-					}
+						}
+						else {
+							return true;
+						}
+					});
 				} else {
 					// Let event handling to the user, just display the confirm box
 					displayBox();
