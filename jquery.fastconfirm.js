@@ -44,6 +44,8 @@
 			};
 			
 			params = $.extend($.fastConfirm.defaults, options || {});
+
+			var alreadyConfirmedEvent = false;
 			
 			return this.each(function () {
 				var trigger = this,
@@ -78,7 +80,11 @@
 								
 								// If the user wants us to handle events
 								if (params.eventToBind !== null) {
-									$.when(deferred).done(function() { trigger[params.eventToBind]() });
+									$.when(deferred).done(function () {
+										alreadyConfirmedEvent = true;
+										trigger[params.eventToBind]();
+										alreadyConfirmedEvent = false;
+									});
 								}
 							});
 							
@@ -164,7 +170,7 @@
 				// If the user wants to give us complete control over event handling
 				if (params.eventToBind !== null) {
 					$trigger.bind(params.eventToBind + '.fast_confirm', function () {
-						if (params.condition === null || params.condition()) {
+						if (!alreadyConfirmedEvent && (params.condition === null || params.condition())) {
 							displayBox();
 							return false;
 						}
